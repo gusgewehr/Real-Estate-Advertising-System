@@ -8,11 +8,11 @@ import (
 )
 
 type Env struct {
-	DbHost     string `mapstructure:"DB_SERVER_PROD"`
-	DbPort     int    `mapstructure:"DB_PORT_PROD"`
-	DbSid      string `mapstructure:"DB_SERVICE_PROD"`
-	DbUser     string `mapstructure:"DB_USER_PROD"`
-	DbPassword string `mapstructure:"DB_PASS_PROD"`
+	DbHost     string `mapstructure:"DB_HOST"`
+	DbPort     int    `mapstructure:"DB_PORT"`
+	DbSid      string `mapstructure:"DB_NAME"`
+	DbUser     string `mapstructure:"DB_USER"`
+	DbPassword string `mapstructure:"DB_PASS"`
 	Port       int    `mapstructure:"PORT"`
 	Host       string `mapstructure:"HOST"`
 	BasePath   string `mapstructure:"BASE_PATH"`

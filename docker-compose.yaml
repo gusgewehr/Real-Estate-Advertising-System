@@ -2,16 +2,16 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:15-alpine
+    image: postgres
     container_name: real_state_db
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: adminpassword
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: real_state_db
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
   api:
     build:
@@ -24,7 +24,7 @@ services:
       DB_HOST: db
       DB_PORT: 5432
       DB_USER: admin
-      DB_PASSWORD: adminpassword
+      DB_PASSWORD: password
       DB_NAME: real_state_db
     depends_on:
       - db

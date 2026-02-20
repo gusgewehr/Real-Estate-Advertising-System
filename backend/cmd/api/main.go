@@ -14,6 +14,8 @@ func main() {
 
 	env := infrastructure.NewEnv(".env", logger)
 
+	infrastructure.InitDB(env, logger)
+
 	engine := gin.Default()
 	engine.Use(cors.Default())
 

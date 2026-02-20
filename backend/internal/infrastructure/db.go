@@ -1,53 +1,29 @@
 package infrastructure
 
 import (
-	"github.com/jmoiron/sqlx"
-	go_ora "github.com/sijms/go-ora/v2"
+	"fmt"
+
 	"go.uber.org/zap"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type Database struct {
-	Db    *sqlx.DB
-	errDb error
+	Db *gorm.DB
 }
 
 func InitDB(env *Env, logger *zap.SugaredLogger) *Database {
 
-	var dbs = Database{}
+	db := Database{}
 
-	logger.Info("Iniciando banco de dados")
-	defer logger.Info("Banco de dados iniciado")
+	dsn := fmt.Sprintf(`host=%s user=%s password=%s  port=%d dbname=%s sslmode=disable`, env.DbHost, env.DbUser, env.DbPassword, env.DbPort, env.DbSid)
 
-	sqlx.BindDriver("oracle", sqlx.NAMED)
-
-	urlOptions := map[string]string{
-		"SID": env.DbSid,
+	orm, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		logger.Fatalw("Erro ao conectar ao banco de dados.", "erro", err)
 	}
 
-	conn := go_ora.BuildUrl(env.DbHost, env.DbPort, "", env.DbUser, env.DbPassword, urlOptions)
+	db.Db = orm
 
-	dbs.Db, dbs.errDb = sqlx.Open("oracle", conn)
-	if dbs.errDb != nil {
-		logger.Fatal("Erro ao iniciar banco de dados: ", zap.Error(dbs.errDb))
-	}
-
-	dbs.errDb = dbs.Db.Ping()
-	if dbs.errDb == nil {
-		return &dbs
-	}
-
-	conn = go_ora.BuildUrl(env.DbHost, env.DbPort, env.DbSid, env.DbUser, env.DbPassword, map[string]string{})
-
-	dbs.Db, dbs.errDb = sqlx.Open("oracle", conn)
-	if dbs.errDb != nil {
-		logger.Fatal("Erro ao iniciar banco de dados: ", zap.Error(dbs.errDb))
-	}
-
-	dbs.errDb = dbs.Db.Ping()
-	if dbs.errDb == nil {
-		return &dbs
-	}
-
-	logger.Fatalw("Erro ao iniciar banco de dados", "erro", dbs.errDb)
-	return nil
+	return &db
 }
