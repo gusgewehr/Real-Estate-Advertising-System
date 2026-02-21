@@ -8,14 +8,18 @@ import (
 )
 
 type Env struct {
-	DbHost     string `mapstructure:"DB_HOST"`
-	DbPort     int    `mapstructure:"DB_PORT"`
-	DbSid      string `mapstructure:"DB_NAME"`
-	DbUser     string `mapstructure:"DB_USER"`
-	DbPassword string `mapstructure:"DB_PASS"`
-	Port       int    `mapstructure:"PORT"`
-	Host       string `mapstructure:"HOST"`
-	BasePath   string `mapstructure:"BASE_PATH"`
+	DbHost           string   `mapstructure:"DB_HOST"`
+	DbPort           int      `mapstructure:"DB_PORT"`
+	DbSid            string   `mapstructure:"DB_NAME"`
+	DbUser           string   `mapstructure:"DB_USER"`
+	DbPassword       string   `mapstructure:"DB_PASS"`
+	Port             int      `mapstructure:"PORT"`
+	Host             string   `mapstructure:"HOST"`
+	BasePath         string   `mapstructure:"BASE_PATH"`
+	FilePath         string   `mapstructure:"FILE_PATH"`
+	FileUrl          string   `mapstructure:"FILE_URL"`
+	MaxUploadSize    int64    `mapstructure:"MAX_UPLOAD_SIZE"`
+	AllowedMIMETypes []string `mapstructure:"ALLOWED_MIME_TYPES"`
 }
 
 func NewEnv(envPath string, logger *zap.SugaredLogger) *Env {
