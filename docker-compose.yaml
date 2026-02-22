@@ -21,11 +21,19 @@ services:
     ports:
       - "8080:8080"
     environment:
+      GIN_MODE: debug
       DB_HOST: db
+      DB_NAME: real_estate_db
+      DB_PASS: password
       DB_PORT: 5432
       DB_USER: admin
-      DB_PASSWORD: password
-      DB_NAME: real_state_db
+      PORT: 8080
+      HOST: localhost:8080
+      BASE_PATH:
+      FILE_PATH: /public
+      FILE_URL: /public
+      MAX_UPLOAD_SIZE: 10
+      ALLOWED_MIME_TYPES: image/jpeg,image/png,image/webp
     depends_on:
       - db
     volumes:

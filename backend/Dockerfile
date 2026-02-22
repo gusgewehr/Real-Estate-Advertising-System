@@ -1,5 +1,7 @@
 FROM golang:1.25-alpine AS builder
 
+RUN apk add --no-cache tzdata
+
 RUN apk add --no-cache ca-certificates git
 
 WORKDIR /app
@@ -17,7 +19,10 @@ RUN go build -o main ./cmd/api/main.go
 
 FROM scratch
 
+
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
+COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 
 COPY --from=builder /app/main /main
 
