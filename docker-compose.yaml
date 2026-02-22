@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: real_state_db
+      POSTGRES_DB: real_estate_db
     ports:
       - "5432:5432"
     volumes:
@@ -17,7 +17,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: real_state_api
+    container_name: real_estate_api
     ports:
       - "8080:8080"
     environment:
@@ -28,6 +28,9 @@ services:
       DB_NAME: real_state_db
     depends_on:
       - db
+    volumes:
+      - uploaded_images:/app/public
 
 volumes:
   postgres_data:
+  uploaded_images:
