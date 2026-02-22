@@ -7,6 +7,6 @@ import (
 )
 
 func FileStorageRoutes(engine *gin.Engine, fileHandler *handler.FileStorageHandler) {
-	engine.POST("/realestate/image", fileHandler.Upload)
+	engine.POST("/real-estate/image", fileHandler.Upload)
 
 }
