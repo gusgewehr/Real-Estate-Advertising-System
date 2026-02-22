@@ -30,15 +30,14 @@ services:
       PORT: 8080
       HOST: localhost:8080
       BASE_PATH:
-      FILE_PATH: /public
-      FILE_URL: /public
+      FILE_PATH: /app/public
+      FILE_URL: /uploads/public
       MAX_UPLOAD_SIZE: 10
       ALLOWED_MIME_TYPES: image/jpeg,image/png,image/webp
     depends_on:
       - db
     volumes:
-      - uploaded_images:/app/public
+      - ./uploads/public:/app/public
 
 volumes:
   postgres_data:
-  uploaded_images:
