@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"real-state-api/internal/application/port"
+	"real-estate-api/internal/application/port"
 
 	"go.uber.org/zap"
 )

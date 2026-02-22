@@ -1,6 +1,6 @@
 package port
 
-import "real-state-api/internal/domain"
+import "real-estate-api/internal/domain"
 
 type RealEstateInputPort interface {
 	Create(property *domain.RealEstatePropertyInput) error

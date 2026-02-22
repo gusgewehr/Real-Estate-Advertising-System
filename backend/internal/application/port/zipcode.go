@@ -1,6 +1,6 @@
 package port
 
-import "real-state-api/internal/domain"
+import "real-estate-api/internal/domain"
 
 type ZipCodeOutputPort interface {
 	GetZipCode(zipCodeStr string) (*domain.ZipCode, error)

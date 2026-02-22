@@ -1,12 +1,12 @@
 package main
 
 import (
-	"real-state-api/internal/adapters/gateway"
-	"real-state-api/internal/adapters/handler"
-	"real-state-api/internal/adapters/repository"
-	"real-state-api/internal/adapters/route"
-	"real-state-api/internal/application/usecase"
-	"real-state-api/internal/infrastructure"
+	"real-estate-api/internal/adapters/gateway"
+	"real-estate-api/internal/adapters/handler"
+	"real-estate-api/internal/adapters/repository"
+	"real-estate-api/internal/adapters/route"
+	"real-estate-api/internal/application/usecase"
+	"real-estate-api/internal/infrastructure"
 )
 
 func main() {

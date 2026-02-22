@@ -2,7 +2,7 @@ package infrastructure
 
 import (
 	"fmt"
-	"real-state-api/internal/domain"
+	"real-estate-api/internal/domain"
 
 	"go.uber.org/zap"
 	"gorm.io/driver/postgres"

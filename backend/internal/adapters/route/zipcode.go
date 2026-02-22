@@ -1,7 +1,7 @@
 package route
 
 import (
-	"real-state-api/internal/adapters/handler"
+	"real-estate-api/internal/adapters/handler"
 
 	"github.com/gin-gonic/gin"
 )

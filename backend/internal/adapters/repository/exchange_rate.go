@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"real-state-api/internal/domain"
-	"real-state-api/internal/infrastructure"
+	"real-estate-api/internal/domain"
+	"real-estate-api/internal/infrastructure"
 
 	"go.uber.org/zap"
 )

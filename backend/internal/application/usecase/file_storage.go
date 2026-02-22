@@ -5,7 +5,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"real-state-api/internal/application/port"
+	"real-estate-api/internal/application/port"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"

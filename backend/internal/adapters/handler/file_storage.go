@@ -3,7 +3,7 @@ package handler
 import (
 	"fmt"
 	"net/http"
-	"real-state-api/internal/application/port"
+	"real-estate-api/internal/application/port"
 	"strings"
 
 	"github.com/gin-gonic/gin"

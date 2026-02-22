@@ -2,8 +2,8 @@ package usecase
 
 import (
 	"errors"
-	"real-state-api/internal/application/port"
-	"real-state-api/internal/domain"
+	"real-estate-api/internal/application/port"
+	"real-estate-api/internal/domain"
 	"time"
 
 	"go.uber.org/zap"

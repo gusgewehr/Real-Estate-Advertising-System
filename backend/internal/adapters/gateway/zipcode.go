@@ -2,7 +2,7 @@ package gateway
 
 import (
 	"fmt"
-	"real-state-api/internal/domain"
+	"real-estate-api/internal/domain"
 
 	"resty.dev/v3"
 )

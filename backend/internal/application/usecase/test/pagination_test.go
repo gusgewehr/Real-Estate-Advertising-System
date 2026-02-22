@@ -1,7 +1,7 @@
 package test
 
 import (
-	"real-state-api/internal/application/usecase"
+	"real-estate-api/internal/application/usecase"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

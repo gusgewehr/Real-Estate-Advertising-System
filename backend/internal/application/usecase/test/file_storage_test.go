@@ -3,7 +3,7 @@ package test
 import (
 	"errors"
 	"io"
-	"real-state-api/internal/application/usecase"
+	"real-estate-api/internal/application/usecase"
 	"strings"
 	"testing"
 

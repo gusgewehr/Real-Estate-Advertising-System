@@ -1,4 +1,4 @@
-module real-state-api
+module real-estate-api
 
 go 1.25.5
 

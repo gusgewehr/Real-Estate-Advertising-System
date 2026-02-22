@@ -2,7 +2,7 @@ package infrastructure
 
 import (
 	"net/http"
-	"real-state-api/docs"
+	"real-estate-api/docs"
 	"strconv"
 
 	"github.com/gin-contrib/cors"

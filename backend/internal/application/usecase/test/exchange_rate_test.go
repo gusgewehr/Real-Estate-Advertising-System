@@ -2,8 +2,8 @@ package test
 
 import (
 	"errors"
-	"real-state-api/internal/application/usecase"
-	"real-state-api/internal/domain"
+	"real-estate-api/internal/application/usecase"
+	"real-estate-api/internal/domain"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

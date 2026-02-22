@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"real-state-api/internal/infrastructure"
+	"real-estate-api/internal/infrastructure"
 
 	"go.uber.org/zap"
 	"gorm.io/gorm"

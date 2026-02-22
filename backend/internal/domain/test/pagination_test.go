@@ -1,7 +1,7 @@
 package test
 
 import (
-	"real-state-api/internal/domain"
+	"real-estate-api/internal/domain"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
