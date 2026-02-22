@@ -30,7 +30,7 @@ func (r *RealEstateRepository) Create(property *domain.RealEstateProperty) error
 func (r *RealEstateRepository) List(offset, limit int) ([]*domain.RealEstateProperty, error) {
 	var properties []*domain.RealEstateProperty
 
-	result := r.db.Orm.Offset(offset).Find(&properties).Limit(limit)
+	result := r.db.Orm.Offset(offset).Limit(limit).Find(&properties)
 	if result.Error != nil {
 		r.logger.Errorw("Error listing properties", "error", result.Error)
 		return nil, result.Error
