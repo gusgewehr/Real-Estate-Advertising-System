@@ -23,7 +23,7 @@ docker compose up -d api
 ## Links
 - http://localhost:3000 para acessar o frontend
 - http://localhost:8080/docs/index.html para acessar a documentação do backend
-
+- Desktop: Não foi possível testar devido a ausência da ferramente de instalação do Visual Studio 2019
 
 ## Internacionalização
 Para trocar a língua que o frontend está mostrando basta alterar a variável LOCALE no docker-compose.yaml e buildar o container novamente
