@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -36,14 +39,17 @@ class PropertyCard extends StatelessWidget {
                 width: double.infinity,
                 color: Colors.grey.shade200,
                 child: Center(
-                  child: Image.asset(
+                  child: kIsWeb ? Image.asset(
                     property.imageUrl,
                     height: 200,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return Icon(PhosphorIcons.houseLine(PhosphorIconsStyle.thin), size: 64, color: Colors.grey.shade400);
                     },
-                  ),
+                  ) :  Image(image: FileImage(File('./assets/${property.imageUrl}')) as ImageProvider, height: 200,
+                      fit: BoxFit.cover, errorBuilder: (context, error, stackTrace) {
+                    return Icon(PhosphorIcons.houseLine(PhosphorIconsStyle.thin), size: 64, color: Colors.grey.shade400);
+                  }),
                 ),
               ),
               Positioned(

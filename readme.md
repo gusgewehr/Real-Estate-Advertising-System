@@ -31,16 +31,22 @@ docker compose up -d api
 ```
 
 ### Para rodar o frontend no Desktop
-Execute o seguinte comando, prestando atenção nas variáveis de ambiente. O valor da "API_URL" deve ser o local em q a api está rodando. Já o valor do "LOCALE" deve ser um dos valores aceitos demonstrados mais adiante neste documento.
+Execute o seguinte comando, prestando atenção nas variáveis de ambiente. O valor da "API_URL" deve ser o local em q a api está rodando. Já o valor do "LOCALE" deve ser um dos valores aceitos demonstrados mais adiante neste documento. Ele só foi testado em ambiente windows.
 ```bash
+cd frontend
 flutter run -d windows --dart-define=API_URL=http://localhost:8080 --dart-define=LOCALE=pt
 ```
 
 
 ## Links
-- http://localhost:3000 para acessar o frontend
-- http://localhost:8080/docs/index.html para acessar a documentação do backend
-- Desktop: Não foi possível testar devido a ausência da ferramente de instalação do Visual Studio 2019
+- http://localhost:3000 para acessar o frontend na web
+- http://localhost:8080/docs/index.html para acessar a documentação do backend 
+
+### Aviso!
+Para que as imagens sejam carregadas na web é necessário descomentar a seguinte linha no pubsec.yaml
+```yaml
+#      - ./uploads/public/
+```
 
 ## Internacionalização
 Para trocar a língua que o frontend está mostrando basta alterar a variável LOCALE no docker-compose.yaml e buildar o container novamente

@@ -46,20 +46,20 @@ services:
     volumes:
       - ./frontend/assets/uploads/public:/app/public
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        API_URL: http://localhost:8080
-        LOCALE: pt
-    container_name: real_estate_frontend
-    ports:
-      - "3000:80"
-    depends_on:
-      - api
-    volumes:
-      - ./frontend/assets/uploads/public:/usr/share/nginx/html/assets/uploads/public
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #     args:
+  #       API_URL: http://localhost:8080
+  #       LOCALE: pt
+  #   container_name: real_estate_frontend
+  #   ports:
+  #     - "3000:80"
+  #   depends_on:
+  #     - api
+  #   volumes:
+  #     - ./frontend/assets/uploads/public:/usr/share/nginx/html/assets/uploads/public
 
 volumes:
   postgres_data:
