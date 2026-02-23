@@ -12,6 +12,12 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d real_estate_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   api:
     build:
@@ -35,7 +41,8 @@ services:
       MAX_UPLOAD_SIZE: 10
       ALLOWED_MIME_TYPES: image/jpeg,image/png,image/webp
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./frontend/assets/uploads/public:/app/public
 
