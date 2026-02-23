@@ -21,13 +21,13 @@ docker compose up -d api
 
 
 ## Links
-http://localhost:3000 para acessar o frontend
-http://localhost:8080/docs/index.html para acessar a documentação do backend
+- http://localhost:3000 para acessar o frontend
+- http://localhost:8080/docs/index.html para acessar a documentação do backend
 
 
 ## Internacionalização
 Para trocar a língua que o frontend está mostrando basta alterar a variável LOCALE no docker-compose.yaml e buildar o container novamente
 
 ### Línguas suportadas
-    - Português: iserir "pt" no valor da variável de ambiente
-    - Inglês: inserir "en" no valor da variável de ambiente
+- Português: iserir "pt" no valor da variável de ambiente
+- Inglês: inserir "en" no valor da variável de ambiente
