@@ -35,7 +35,7 @@ class _ToolbarState extends State<Toolbar> {
                     valueListenable: widget.controller.isError,
                     builder: (context, error, child){
                       if (error != "") {
-                        return CustomError();
+                        return Text("");
                       }
 
                       return ValueListenableBuilder<ExchangeRateEntity?>(

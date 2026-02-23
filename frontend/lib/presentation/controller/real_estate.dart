@@ -18,7 +18,9 @@ class RealEstateController{
   final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
   final ValueNotifier<String> isError = ValueNotifier<String>("");
   final ValueNotifier<PaginationEntity<RealEstateEntity>?> realEstate = ValueNotifier<PaginationEntity<RealEstateEntity>?>(null);
-  final ValueNotifier<bool> isSuccess = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> createIsLoading = ValueNotifier<bool>(false);
+  final ValueNotifier<String> createIsError = ValueNotifier<String>("");
+  final ValueNotifier<bool> createIsSuccess = ValueNotifier<bool>(false);
   final ValueNotifier<String> createSuccess = ValueNotifier<String>("");
 
   Future<void> createRealEstate(
@@ -40,19 +42,19 @@ class RealEstateController{
       imageUrl: imageUrl,
     );
 
-    isLoading.value = true;
-    isError.value = "";
+    createIsLoading.value = true;
+    createIsError.value = "";
 
     try{
       await createRealEstateUseCase.createRealEstate(realEstate);
 
       createSuccess.value = "Real estate created successfully";
     } catch(e){
-      isError.value = e.toString();
+      createIsError.value = e.toString();
 
     }finally{
-      isLoading.value = false;
-      isSuccess.value = true;
+      createIsLoading.value = false;
+      createIsSuccess.value = true;
     }
   }
 
@@ -76,8 +78,8 @@ class RealEstateController{
   }
 
   Future<String> uploadImage(PlatformFile image) async{
-    isLoading.value = true;
-    isError.value = "";
+    createIsLoading.value = true;
+    createIsError.value = "";
 
     try{
       final res = await uploadImageUseCase.uploadImage(image);
@@ -88,7 +90,7 @@ class RealEstateController{
       isError.value = e.toString();
     } finally{
       isLoading.value = false;
-      isSuccess.value = true;
+      createIsSuccess.value = true;
     }
     return "";
   }

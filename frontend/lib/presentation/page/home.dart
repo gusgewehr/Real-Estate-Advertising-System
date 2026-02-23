@@ -64,8 +64,8 @@ class _HomeState extends State<Home> {
       ),
       body: ToastListener(
         errorNotifiers: [
-          realEstateController.isError,
-          exchangeRateController.isError,
+          realEstateController.createIsError,
+          exchangeRateController.createError,
         ],
         successNotifiers: [
           exchangeRateController.createSuccess,

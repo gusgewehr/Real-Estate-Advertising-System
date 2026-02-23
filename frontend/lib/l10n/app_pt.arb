@@ -27,7 +27,7 @@
   "addImage": "Click to add image",
   "rent": "Alugar",
   "sell": "Vender",
-  "genericError": "Erro desonhecido",
+  "genericError": "Nenhum item encontrado",
   "contractType": "Tipo de contrato",
   "required": "Campo obrigatório",
   "invalidNumber": "Insira um valor válido",

@@ -27,7 +27,7 @@
   "addImage": "Clique para adicionar imagem",
   "rent": "Rent",
   "sell": "Sell",
-  "genericError": "Something went wrong",
+  "genericError": "No item found",
   "contractType": "Contract Type",
   "required": "This field is required",
   "invalidNumber": "Please enter a valid value",

@@ -49,6 +49,9 @@ class RealEstateDataSourceImpl implements RealEstateDataSource{
       final response = await apiClient.dio.get('/real-estate', queryParameters: params);
 
       if (response.statusCode != 200) {
+        if (response.statusCode == 404) {
+          return PaginationModel<RealEstateEntity>(data: [], page:0, totalItems: 0, totalPages: 0, pageSize: 0, hasNextPage: false, hasPrevPage: false);
+        }
         throw Exception('Failed to fetch real estate: ${response.statusCode}');
       }
 

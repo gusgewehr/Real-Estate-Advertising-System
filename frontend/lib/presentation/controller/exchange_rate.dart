@@ -14,6 +14,8 @@ class ExchangeRateController{
   final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
   final ValueNotifier<String> isError = ValueNotifier<String>("");
   final ValueNotifier<String> createSuccess = ValueNotifier<String>("");
+  final ValueNotifier<String> createError = ValueNotifier<String>("");
+  final ValueNotifier<bool> createIsLoading = ValueNotifier<bool>(false);
   final ValueNotifier<ExchangeRateEntity?> exchangeRate = ValueNotifier<ExchangeRateEntity?>(null);
 
   Future<double> getLatestExchangeRate() async{
@@ -34,7 +36,7 @@ class ExchangeRateController{
   }
 
   Future<void> addExchangeRate(double exchangeRate) async{
-    isLoading.value = true;
+    createIsLoading.value = true;
     isError.value = "";
 
     ExchangeRateEntity exchangeRateEntity = ExchangeRateEntity(value: exchangeRate);
@@ -45,9 +47,9 @@ class ExchangeRateController{
 
       createSuccess.value = "Exchange rate updated successfully";
     }catch(e){
-      isError.value = e.toString();
+      createError.value = e.toString();
     } finally{
-      isLoading.value = false;
+      createIsLoading.value = false;
       getLatestExchangeRate();
     }
 
