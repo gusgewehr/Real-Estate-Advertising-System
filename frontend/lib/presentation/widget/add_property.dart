@@ -60,7 +60,6 @@ class _AddPropertyState extends State<AddProperty> {
 
 
   Future<void> getAddress() async {
-    final formValid = _formKey.currentState?.validate() ?? false;
     if (_inputZipCode.text.trim().isEmpty) {
       _formKey.currentState?.validate();
       return;
