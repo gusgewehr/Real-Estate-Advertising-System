@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:frontend/core/api_client.dart';
 import 'package:frontend/data/models/real_estate.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../../domain/entity/pagination.dart';
 import '../../domain/entity/real_estate.dart';
@@ -13,7 +13,7 @@ import '../models/pagination.dart';
 abstract class RealEstateDataSource{
   Future<void> createRealEstate(RealEstateEntity realEstate);
   Future<PaginationEntity<RealEstateEntity>> getRealEstate(int page, int pageSize);
-  Future<String> uploadImage(XFile image);
+  Future<String> uploadImage(PlatformFile image);
 }
 
 class RealEstateDataSourceImpl implements RealEstateDataSource{
@@ -67,19 +67,18 @@ class RealEstateDataSourceImpl implements RealEstateDataSource{
   }
 
   @override
-  Future<String> uploadImage(XFile pickedFile) async {
+  Future<String> uploadImage(PlatformFile pickedFile) async {
     try {
       MultipartFile multipartFile;
 
       if (kIsWeb) {
-        Uint8List bytes = await pickedFile.readAsBytes();
         multipartFile = MultipartFile.fromBytes(
-          bytes,
+          pickedFile.bytes!,
           filename: pickedFile.name,
         );
       } else {
         multipartFile = await MultipartFile.fromFile(
-          pickedFile.path,
+          pickedFile.path!,
           filename: pickedFile.name,
         );
       }

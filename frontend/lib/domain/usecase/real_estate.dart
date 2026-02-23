@@ -1,6 +1,6 @@
 
 import 'package:frontend/domain/entity/real_estate.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../entity/pagination.dart';
 import '../repository/real_estate.dart';
@@ -30,7 +30,7 @@ class UploadImageUseCase{
 
   UploadImageUseCase({required this.realEstateRepository});
 
-  Future<String> uploadImage(XFile image) async{
+  Future<String> uploadImage(PlatformFile image) async{
     return await realEstateRepository.uploadImage(image);
   }
 }

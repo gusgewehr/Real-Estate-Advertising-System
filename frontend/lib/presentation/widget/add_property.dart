@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/domain/entity/address.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../controller/address.dart';
@@ -25,24 +25,29 @@ class AddProperty extends StatefulWidget {
 }
 
 class _AddPropertyState extends State<AddProperty> {
-  File? _pickedImage;
+  PlatformFile? _pickedImage;
   String imageUrl = "";
   AddressEntity? address;
   final List<String> _apiValues = ['RENT', 'SELL'];
   String _currentTechnicalValue = 'RENT';
+  final _formKey = GlobalKey<FormState>();
+  bool _imageError = false;
 
 
   Future<void> getImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      withData: kIsWeb,
+    );
 
-    if (image == null) return;
+    if (result == null) return;
+    final file = result.files.first;
     setState(() {
-      _pickedImage = File(image.path);
+      _pickedImage = file;
+      _imageError = false;
     });
 
-    imageUrl = await widget.realEstateController.uploadImage(image);
-    return;
+    imageUrl = await widget.realEstateController.uploadImage(file);
   }
 
   final TextEditingController _inputZipCode = TextEditingController(text: '');
@@ -55,12 +60,13 @@ class _AddPropertyState extends State<AddProperty> {
   final TextEditingController _inputValue = TextEditingController(text: '');
 
 
+  Future<void> getAddress() async {
+    if (_inputZipCode.text.trim().isEmpty) {
+      _formKey.currentState?.validate();
+      return;
+    }
 
-
-
-  Future<void> getAddress() async{
     String zipCode = _inputZipCode.text;
-
 
     AddressEntity? res = await widget.addressController.getAddress(zipCode);
 
@@ -77,7 +83,15 @@ class _AddPropertyState extends State<AddProperty> {
     }
 
 
-  Future<void> createRealEstate() async{
+  Future<void> createRealEstate() async {
+    final formValid = _formKey.currentState?.validate() ?? false;
+    final imageValid = _pickedImage != null;
+
+    setState(() {
+      _imageError = !imageValid;
+    });
+
+    if (!formValid || !imageValid) return;
 
     await widget.realEstateController.createRealEstate(
         _inputStreet.text, _inputComplement.text, _inputNeighborhood.text, _inputCity.text, _inputState.text, _inputZipCode.text, _currentTechnicalValue, imageUrl, _inputValue.text
@@ -88,6 +102,7 @@ class _AddPropertyState extends State<AddProperty> {
       _inputZipCode.text = "";
       _pickedImage = null;
       imageUrl = "";
+      _imageError = false;
     });
 
 
@@ -141,7 +156,7 @@ class _AddPropertyState extends State<AddProperty> {
                 ),
               ),
               const SizedBox(height: 16),
-      
+
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
@@ -156,7 +171,9 @@ class _AddPropertyState extends State<AddProperty> {
                     ),
                   ],
                 ),
-                child: Column(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
                     children: [
                       GestureDetector(
                         onTap: () => getImage(),
@@ -166,38 +183,59 @@ class _AddPropertyState extends State<AddProperty> {
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.grey, style: BorderStyle.solid),
+                            border: Border.all(
+                              color: _imageError ? Colors.red : Colors.grey,
+                              style: BorderStyle.solid,
+                            ),
                           ),
                           child: _pickedImage != null
                               ? ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: kIsWeb
-                          ? Image.network(_pickedImage!.path, fit: BoxFit.cover)
-                              : Image.file(File(_pickedImage!.path), fit: BoxFit.cover)
+                          ? Image.memory(_pickedImage!.bytes!, fit: BoxFit.cover)
+                              : Image.file(File(_pickedImage!.path!), fit: BoxFit.cover)
                           )
                               :  Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.add_a_photo, size: 50, color: Colors.grey),
+                              Icon(Icons.add_a_photo, size: 50, color: _imageError ? Colors.red : Colors.grey),
                               SizedBox(height: 8),
-                              Text(l10n.addImage, style: TextStyle(color: Colors.grey)),
+                              Text(l10n.addImage, style: TextStyle(color: _imageError ? Colors.red : Colors.grey)),
                             ],
                           ),
                         ),
                       ),
-      
+
+                      if (_imageError)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6, left: 12),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Please select an image',
+                              style: TextStyle(color: Colors.red[700], fontSize: 12),
+                            ),
+                          ),
+                        ),
+
                       const SizedBox(height: 24),
 
                       Row(
                         children: [
                           Expanded(
-                            child: TextField(
+                            child: TextFormField(
                               controller: _inputZipCode,
                               keyboardType: const TextInputType.numberWithOptions(decimal: false),
                               decoration: InputDecoration(
                                 labelText: l10n.zipCode,
                                 border: const OutlineInputBorder(),
                               ),
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return 'This field is required';
+                                }
+                                return null;
+                              },
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -215,13 +253,19 @@ class _AddPropertyState extends State<AddProperty> {
                       if (address != null)
                         Column(
                         children: [
-                          TextField(
+                          TextFormField(
                           controller: _inputStreet,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             labelText: l10n.street,
                             border: OutlineInputBorder(),
                           ),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'This field is required';
+                            }
+                            return null;
+                          },
                         ),
 
 
@@ -240,13 +284,19 @@ class _AddPropertyState extends State<AddProperty> {
                                 ),
                               ),
                               Expanded(
-                                child: TextField(
+                                child: TextFormField(
                                   controller: _inputNeighborhood,
                                   keyboardType: TextInputType.text,
                                   decoration: InputDecoration(
                                     labelText: l10n.neighborhood,
                                     border: OutlineInputBorder(),
                                   ),
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'This field is required';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),
                             ],
@@ -257,23 +307,35 @@ class _AddPropertyState extends State<AddProperty> {
                           Row(
                             children: [
                               Expanded(
-                                child: TextField(
+                                child: TextFormField(
                                   controller: _inputCity,
                                   keyboardType: TextInputType.text,
                                   decoration: InputDecoration(
                                     labelText: l10n.city,
                                     border: OutlineInputBorder(),
                                   ),
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'This field is required';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),
                               Expanded(
-                                child: TextField(
+                                child: TextFormField(
                                   controller: _inputState,
                                   keyboardType: TextInputType.text,
                                   decoration: InputDecoration(
                                     labelText: l10n.state,
                                     border: OutlineInputBorder(),
                                   ),
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'This field is required';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),
                             ],
@@ -281,13 +343,23 @@ class _AddPropertyState extends State<AddProperty> {
 
                           const SizedBox(height: 16),
 
-                          TextField(
+                          TextFormField(
                             controller: _inputValue,
                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
                             decoration: InputDecoration(
                               labelText: l10n.value,
                               border: OutlineInputBorder(),
                             ),
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'This field is required';
+                              }
+                              final parsed = double.tryParse(value.trim());
+                              if (parsed == null || parsed <= 0) {
+                                return 'Please enter a valid value';
+                              }
+                              return null;
+                            },
                           ),
 
                           const SizedBox(height: 16),
@@ -323,7 +395,6 @@ class _AddPropertyState extends State<AddProperty> {
 
 
 
-
                         ],
                       ),
 
@@ -342,6 +413,7 @@ class _AddPropertyState extends State<AddProperty> {
                         ),
                     ],
                   ),
+                ),
               ),
             ],
           ),

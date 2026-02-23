@@ -1,6 +1,6 @@
 import 'package:frontend/domain/entity/real_estate.dart';
 import 'package:frontend/domain/repository/real_estate.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../../domain/entity/pagination.dart';
 import '../datasources/real_estate.dart';
@@ -24,7 +24,7 @@ class RealEstateRepositoryImpl implements RealEstateRepository{
   }
 
   @override
-  Future<String> uploadImage(XFile image) async {
+  Future<String> uploadImage(PlatformFile image) async {
     final res = await realEstateDataSource.uploadImage(image);
 
     return res;

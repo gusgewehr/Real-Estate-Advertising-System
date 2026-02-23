@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:frontend/domain/usecase/real_estate.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../../domain/entity/address.dart';
 import '../../domain/entity/pagination.dart';
@@ -75,7 +75,7 @@ class RealEstateController{
 
   }
 
-  Future<String> uploadImage(XFile image) async{
+  Future<String> uploadImage(PlatformFile image) async{
     isLoading.value = true;
     isError.value = "";
 
