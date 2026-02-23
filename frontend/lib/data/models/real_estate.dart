@@ -16,7 +16,7 @@ class RealEstateModel extends RealEstateEntity {
 
     return RealEstateModel(
       address: AddressModel.fromJson(json['address']),
-      price: json['value'] ?? 0,
+      price: (json['value'] ?? 0).toDouble(),
       transactionType: json['type'] ?? "",
       imageUrl: json['image'] ?? "",
 
