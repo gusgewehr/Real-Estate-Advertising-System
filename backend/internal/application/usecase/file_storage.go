@@ -38,12 +38,12 @@ func (uc *FileStorageUseCase) Upload(file io.Reader, fileName string) (string, e
 	fileName = fmt.Sprint(uuidName.String(), fileExt)
 	fullPath := filepath.Join(uc.filePath, fileName)
 
-	res, err := uc.fileStorage.Upload(fullPath, file)
+	_, err := uc.fileStorage.Upload(fullPath, file)
 	if err != nil {
 		return "", err
 	}
 
-	imageUrl := uc.hostURL + res
+	imageUrl := fmt.Sprintf("%s/%s",  uc.fileUrl, fileName)
 
 	return imageUrl, nil
 }
