@@ -1,3 +1,34 @@
 {
-    "helloWorld": "Olá Mundo!"
+  "appTitle": "Sistema de Anúncio de Imóveis",
+  "quoteAction": "Adicionar Cotação",
+  "newAdButton": "Novo Anúncio",
+  "pageTitle": "Anúncios de Imóveis",
+  "quoteSubtitle": "Cotação atual: ",
+  "badgeSale": "Venda",
+  "badgeRent": "Aluguel",
+  "realEstateError": "Error ao buscar imóveis",
+  "emptyRealEstateList": "Nenhum imóvel encontrado",
+  "page": "Página",
+  "nextPage": "Próxima",
+  "prevPage": "Anterior",
+  "backButton": "Voltar",
+  "exchangeRateTitle": "Cotação USD/BRL",
+  "exchangeRateDesc": "Defina o valor de reais em dólar para conversão automática nos anúncios.",
+  "exchangeRateSave": "Salvar Cotação",
+  "zipCode": "CEP",
+  "searchZipCode": "Buscar CEP",
+  "street": "Logradouro",
+  "neighborhood": "Bairro",
+  "complement": "Complemento",
+  "city": "Cidade",
+  "state": "UF",
+  "value": "Valor",
+  "saveProperty": "Salvar Imóvel",
+  "addImage": "Click to add image",
+  "rent": "Alugar",
+  "sell": "Vender",
+  "genericError": "Erro desonhecido",
+  "contractType": "Tipo de contrato"
+
+
 }

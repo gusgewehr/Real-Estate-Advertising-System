@@ -1,6 +1,33 @@
 {
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  }
+  "appTitle": "Real Estate Advertising System",
+  "quoteAction": "Add Exchange Rate",
+  "newAdButton": "New Ad",
+  "pageTitle": "Advertised Properties",
+  "quoteSubtitle": "Current exchange rate: ",
+  "badgeSale": "Sell",
+  "badgeRent": "Rent",
+  "realEstateError": "Error getting real estate data",
+  "emptyRealEstateList": "No real estate data found.",
+  "page": "Page",
+  "nextPage": "Next",
+  "prevPage": "Previous",
+  "backButton": "Back",
+  "exchangeRateTitle": "Exchange rate USD/BRL",
+  "exchangeRateDesc": "Set the exchange rate for USD to BRL automatically convert in ads.",
+  "exchangeRateSave": "Save Exchange Rate",
+  "zipCode": "Zip Code",
+  "searchZipCode": "Search Zip Code",
+  "street": "Street",
+  "neighborhood": "Neighborhood",
+  "complement": "Complement",
+  "city": "City",
+  "state": "State Abbrv.",
+  "value": "Value in BRL",
+  "saveProperty": "Save Property",
+  "addImage": "Clique para adicionar imagem",
+  "rent": "Rent",
+  "sell": "Sell",
+  "genericError": "Something went wrong",
+  "contractType": "Contract Type"
+
 }
