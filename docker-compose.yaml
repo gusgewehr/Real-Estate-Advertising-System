@@ -31,13 +31,28 @@ services:
       HOST: localhost:8080
       BASE_PATH:
       FILE_PATH: /app/public
-      FILE_URL: /uploads/public
+      FILE_URL: uploads/public
       MAX_UPLOAD_SIZE: 10
       ALLOWED_MIME_TYPES: image/jpeg,image/png,image/webp
     depends_on:
       - db
     volumes:
-      - ./uploads/public:/app/public
+      - ./frontend/assets/uploads/public:/app/public
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        API_URL: http://localhost:8080
+        LOCALE: pt
+    container_name: real_estate_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    volumes:
+      - ./frontend/assets/uploads/public:/usr/share/nginx/html/assets/uploads/public
 
 volumes:
   postgres_data:
