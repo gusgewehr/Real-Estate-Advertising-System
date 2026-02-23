@@ -105,14 +105,13 @@ class _AddPropertyState extends State<AddProperty> {
 
   Future<void> createRealEstate() async {
     final formValid = _formKey.currentState?.validate() ?? false;
-    final imageValid = _pickedImage != null;
 
-
-    if (!formValid || !imageValid) return;
+    if (!formValid) return;
 
     await widget.realEstateController.createRealEstate(
         _inputStreet.text, _inputComplement.text, _inputNeighborhood.text, _inputCity.text, _inputState.text, _inputZipCode.text, _currentTechnicalValue, imageUrl, _inputValue.text
     );
+
 
     setState(() {
       address = null;
@@ -120,6 +119,7 @@ class _AddPropertyState extends State<AddProperty> {
       _pickedImage = null;
       imageUrl = "";
     });
+
 
 
   }
