@@ -28,6 +28,9 @@
   "rent": "Rent",
   "sell": "Sell",
   "genericError": "Something went wrong",
-  "contractType": "Contract Type"
+  "contractType": "Contract Type",
+  "required": "This field is required",
+  "invalidNumber": "Please enter a valid value",
+  "zipError": "Invalid zip code"
 
 }

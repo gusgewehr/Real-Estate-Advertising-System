@@ -31,7 +31,7 @@ class _AddPropertyState extends State<AddProperty> {
   final List<String> _apiValues = ['RENT', 'SELL'];
   String _currentTechnicalValue = 'RENT';
   final _formKey = GlobalKey<FormState>();
-  bool _imageError = false;
+  bool zipError = false;
 
 
   Future<void> getImage() async {
@@ -44,7 +44,6 @@ class _AddPropertyState extends State<AddProperty> {
     final file = result.files.first;
     setState(() {
       _pickedImage = file;
-      _imageError = false;
     });
 
     imageUrl = await widget.realEstateController.uploadImage(file);
@@ -61,16 +60,38 @@ class _AddPropertyState extends State<AddProperty> {
 
 
   Future<void> getAddress() async {
+    final formValid = _formKey.currentState?.validate() ?? false;
     if (_inputZipCode.text.trim().isEmpty) {
       _formKey.currentState?.validate();
       return;
     }
 
+    if (_inputZipCode.text.trim().length != 8) {
+      _formKey.currentState?.validate();
+      return;
+    }
+
+
+
     String zipCode = _inputZipCode.text;
 
     AddressEntity? res = await widget.addressController.getAddress(zipCode);
 
-    res ??= AddressEntity(zipCode: "", street: "", complement: "", neighborhood: "", city: "", stateAbbr: "");
+    if (res == null) {
+      res = AddressEntity(zipCode: "", street: "", complement: "", neighborhood: "", city: "", stateAbbr: "");
+      setState(() {
+        zipError = true;
+      });
+      _formKey.currentState?.validate();
+    }else {
+      setState(() {
+        zipError = false;
+      });
+      _formKey.currentState?.validate();
+    }
+
+
+
       setState(() {
         address = res;
         res?.street != "" ?
@@ -87,9 +108,6 @@ class _AddPropertyState extends State<AddProperty> {
     final formValid = _formKey.currentState?.validate() ?? false;
     final imageValid = _pickedImage != null;
 
-    setState(() {
-      _imageError = !imageValid;
-    });
 
     if (!formValid || !imageValid) return;
 
@@ -102,7 +120,6 @@ class _AddPropertyState extends State<AddProperty> {
       _inputZipCode.text = "";
       _pickedImage = null;
       imageUrl = "";
-      _imageError = false;
     });
 
 
@@ -184,7 +201,7 @@ class _AddPropertyState extends State<AddProperty> {
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: _imageError ? Colors.red : Colors.grey,
+                              color:  Colors.grey,
                               style: BorderStyle.solid,
                             ),
                           ),
@@ -198,25 +215,15 @@ class _AddPropertyState extends State<AddProperty> {
                               :  Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.add_a_photo, size: 50, color: _imageError ? Colors.red : Colors.grey),
+                              Icon(Icons.add_a_photo, size: 50, color:  Colors.grey),
                               SizedBox(height: 8),
-                              Text(l10n.addImage, style: TextStyle(color: _imageError ? Colors.red : Colors.grey)),
+                              Text(l10n.addImage, style: TextStyle(color: Colors.grey)),
                             ],
                           ),
                         ),
                       ),
 
-                      if (_imageError)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 6, left: 12),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Please select an image',
-                              style: TextStyle(color: Colors.red[700], fontSize: 12),
-                            ),
-                          ),
-                        ),
+
 
                       const SizedBox(height: 24),
 
@@ -232,7 +239,10 @@ class _AddPropertyState extends State<AddProperty> {
                               ),
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return 'This field is required';
+                                  return l10n.required;
+                                }
+                                if (value.length != 8 || zipError){
+                                  return l10n.zipError;
                                 }
                                 return null;
                               },
@@ -262,7 +272,7 @@ class _AddPropertyState extends State<AddProperty> {
                           ),
                           validator: (value) {
                             if (value == null || value.trim().isEmpty) {
-                              return 'This field is required';
+                              return l10n.required;
                             }
                             return null;
                           },
@@ -283,6 +293,7 @@ class _AddPropertyState extends State<AddProperty> {
                                   ),
                                 ),
                               ),
+                              const SizedBox(width: 5),
                               Expanded(
                                 child: TextFormField(
                                   controller: _inputNeighborhood,
@@ -293,7 +304,7 @@ class _AddPropertyState extends State<AddProperty> {
                                   ),
                                   validator: (value) {
                                     if (value == null || value.trim().isEmpty) {
-                                      return 'This field is required';
+                                      return l10n.required;
                                     }
                                     return null;
                                   },
@@ -316,12 +327,13 @@ class _AddPropertyState extends State<AddProperty> {
                                   ),
                                   validator: (value) {
                                     if (value == null || value.trim().isEmpty) {
-                                      return 'This field is required';
+                                      return l10n.required;
                                     }
                                     return null;
                                   },
                                 ),
                               ),
+                              const SizedBox(width: 5),
                               Expanded(
                                 child: TextFormField(
                                   controller: _inputState,
@@ -332,7 +344,7 @@ class _AddPropertyState extends State<AddProperty> {
                                   ),
                                   validator: (value) {
                                     if (value == null || value.trim().isEmpty) {
-                                      return 'This field is required';
+                                      return l10n.required;
                                     }
                                     return null;
                                   },
@@ -352,11 +364,11 @@ class _AddPropertyState extends State<AddProperty> {
                             ),
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'This field is required';
+                                return l10n.required;
                               }
                               final parsed = double.tryParse(value.trim());
                               if (parsed == null || parsed <= 0) {
-                                return 'Please enter a valid value';
+                                return l10n.invalidNumber;
                               }
                               return null;
                             },

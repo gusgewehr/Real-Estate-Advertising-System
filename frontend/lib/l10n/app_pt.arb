@@ -28,7 +28,11 @@
   "rent": "Alugar",
   "sell": "Vender",
   "genericError": "Erro desonhecido",
-  "contractType": "Tipo de contrato"
+  "contractType": "Tipo de contrato",
+  "required": "Campo obrigatório",
+  "invalidNumber": "Insira um valor válido",
+  "zipError": "CEP inválido"
+
 
 
 }
