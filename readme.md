@@ -7,6 +7,17 @@ conversão de valores entre Real (BRL) e Dólar (USD).
 
 ## Como Executar
 
+Clone o repositório
+```bash
+git clone https://github.com/gusgewehr/Real-Estate-Advertising-System.git
+```
+
+Entre na pata do projeto
+```bash
+cd Real-Estate-Advertising-System
+```
+
+
 Rode o comando
 ```bash
 docker compose up --build -d
