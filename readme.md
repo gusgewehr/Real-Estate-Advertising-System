@@ -13,10 +13,16 @@ docker compose up --build -d
 ```
 e aguarde enquanto o sistema fica online.
 
-## Pontos importantes
+### Pontos importantes
 É possível que na primeira execução o container da api não suba pois o container do postgres ainda não estava disponível. Nesse caso basta executar o container da api novamente
 ```bash
 docker compose up -d api
+```
+
+### Para rodar o frontend no Desktop
+Execute o seguinte comando, prestando atenção nas variáveis de ambiente. O valor da "API_URL" deve ser o local em q a api está rodando. Já o valor do "LOCALE" deve ser um dos valores aceitos demonstrados mais adiante neste documento.
+```bash
+flutter run -d windows --dart-define=API_URL=http://localhost:8080 --dart-define=LOCALE=pt
 ```
 
 
